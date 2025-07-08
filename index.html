@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MakvinVPN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(180deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: #f5f5f5;
+            font-family: 'Poppins', sans-serif;
+        }
+        .glassmorphic {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        .neumorphic-btn {
+            background: linear-gradient(45deg, #ef4444, #f97316);
+            box-shadow: 6px 6px 12px #1c1c1c, -6px -6px 12px #383838;
+            transition: all 0.3s ease;
+        }
+        .neumorphic-btn:hover {
+            box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.3), inset -4px -4px 8px rgba(255, 255, 255, 0.1);
+            transform: scale(1.05) translateY(-2px);
+        }
+        .status-dot {
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        .status-operational { background-color: #22c55e; }
+        .status-maintenance { background-color: #f59e0b; }
+        .status-down { background-color: #ef4444; }
+        .gradient-red {
+            background: linear-gradient(45deg, #ef4444, #f97316);
+        }
+        .logo-3d {
+            transform: perspective(500px) rotateY(10deg);
+            transition: transform 0.5s ease;
+        }
+        .logo-3d:hover {
+            transform: perspective(500px) rotateY(0deg) scale(1.1);
+        }
+        .asymmetric {
+            transform: translateX(10px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center">
+    <!-- Hero Section -->
+    <section class="w-full max-w-md px-4 py-16 text-center" data-aos="zoom-in">
+        <img src="https://via.placeholder.com/120?text=Logo" alt="MakvinVPN Logo" class="mx-auto mb-6 rounded-full logo-3d">
+        <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 mb-4">MakvinVPN</h1>
+        <p class="text-lg mb-8">Ваш ключ к безопасному и быстрому интернету</p>
+    </section>
+
+    <!-- Social Links Section -->
+    <section class="w-full max-w-md px-4 flex flex-col gap-4 mb-12" data-aos="fade-up" data-aos-delay="100">
+        <a href="https://t.me/makvinvpn_channel" target="_blank" class="glassmorphic neumorphic-btn text-white py-4 px-6 rounded-2xl flex items-center justify-center gap-3 text-lg asymmetric">
+            <i class="fab fa-telegram-plane"></i> Telegram Канал
+        </a>
+        <a href="https://t.me/makvinvpn_bot" target="_blank" class="glassmorphic neumorphic-btn text-white py-4 px-6 rounded-2xl flex items-center justify-center gap-3 text-lg">
+            <i class="fas fa-robot"></i> Telegram Бот
+        </a>
+        <a href="https://t.me/makvinvpn_support" target="_blank" class="glassmorphic neumorphic-btn text-white py-4 px-6 rounded-2xl flex items-center justify-center gap-3 text-lg asymmetric">
+            <i class="fas fa-headset"></i> Поддержка
+        </a>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, easing: 'ease-in-out' });
+        
+        // Simulated system status data (replace with real API call in production)
+        const statusData = [
+            { name: "Основные серверы", status: "operational" },
+            { name: "Служба аутентификации", status: "operational" },
+            { name: "Платежный шлюз", status: "maintenance" },
+            { name: "Разрешение DNS", status: "operational" },
+            { name: "API точки", status: "down" },
+        ];
+
+        const statusGrid = document.getElementById('status-grid');
+
+        function renderStatus() {
+            statusGrid.innerHTML = '';
+            statusData.forEach((item, index) => {
+                const statusClass = `status-dot status-${item.status}`;
+                const statusText = item.status === 'operational' ? 'Работает' : 
+                                 item.status === 'maintenance' ? 'Техобслуживание' : 'Не работает';
+                const card = `
+                    <div class="glassmorphic p-4 rounded-xl flex items-center gap-3 ${index % 2 ? 'asymmetric' : ''}">
+                        <span class="${statusClass}"></span>
+                        <div>
+                            <h3 class="font-semibold">${item.name}</h3>
+                            <p class="text-sm">${statusText}</p>
+                        </div>
+                    </div>
+                `;
+                statusGrid.innerHTML += card;
+            });
+        }
+
+        // Initial render
+        renderStatus();
+
+        // Simulate status update every 30 seconds (replace with WebSocket or API polling)
+        setInterval(() => {
+            statusData.forEach(item => {
+                const statuses = ['operational', 'maintenance', 'down'];
+                item.status = statuses[Math.floor(Math.random() * statuses.length)];
+            });
+            renderStatus();
+        }, 30000);
+    </script>
+</body>
+</html>
