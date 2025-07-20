@@ -1,70 +1,602 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Makvin Projects</title>
 
-</div>
+    <style>
+		#preloader {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: #111;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 9999;
+			flex-direction: column;
+			overflow: hidden;
+		}
 
-<div class="cursor-glow"></div>
+		#particles {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			filter: blur(25px);
+			z-index: 1;
+		}
 
-<div class="container">
-  <h1>Makvin Projects</h1>
-  <div class="projects-grid">
-    <!-- твои карточки -->
-    <a href="https://t.me/makvinvpn_newbot" target="_blank" class="project-card" style="--delay:0;">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-        <path d="M256 0c4.6 0 9.2 1 13.4 2.9L400.6 60.2c2.7 1.2 5.1 2.9 7.1 5.1L492.3 150c18.3 20.6 24.8 47.9 18.2 73.6l-57.9 229.7c-3.1 12.3-10.3 23-20.5 31.7L280.9 494.3c-3.8 3.2-8.7 5-13.8 5s-10.1-1.7-13.8-5L58.9 485c-10.2-8.7-17.3-19.4-20.5-31.7L-2.2 223.6c-6.6-25.7 0-52.9 18.2-73.6l84.6-84.6c2-2.2 4.4-3.9 7.1-5.1L242.6 2.9C246.8 1 251.4 0 256 0zM128 224a128 128 0 1 1 256 0 128 128 0 1 1 -256 0z"/>
-      </svg>
-      <h2>MakvinVPN</h2>
-      <p>Ваша безопасность в сети</p>
-    </a>
-    <div class="project-card" id="openStressModal" style="--delay:1;">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-        <path d="M128 0C110.3 0 96 14.3 96 32V179.3L19.5 224.6c-16.3 8.3-22.6 29.5-14.3 45.8s29.5 22.6 45.8 14.3L128 232v96l-78.5 44.7c-16.3 8.3-22.6 29.5-14.3 45.8s29.5 22.6 45.8 14.3L128 352v128c0 17.7 14.3 32 32 32s32-14.3 32-32V332.7L294.5 284c16.3-8.3 22.6-29.5 14.3-45.8s-29.5-22.6-45.8-14.3L192 280V184l78.5-44.7c16.3-8.3 22.6-29.5 14.3-45.8s-29.5-22.6-45.8-14.3L192 160V32c0-17.7-14.3-32-32-32H128z"/>
-      </svg>
-      <h2>MakvinStress</h2>
-      <p>Сервис для тестирования нагрузки</p>
+		.preloader-text {
+			color: #FF4444;
+			font-size: 2em;
+			z-index: 2;
+			text-align: center;
+			font-weight: bold;
+			text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+		}
+
+		.preloader-text h2 {
+			font-size: 2.4em;
+			margin-bottom: 10px;
+			animation: fadeText 2s ease-in-out infinite;
+		}
+
+		.preloader-text p {
+			font-size: 1.2em;
+			color: #ccc;
+		}
+
+		@keyframes fadeText {
+			0%, 100% { opacity: 0.5; }
+			50% { opacity: 1; }
+		}
+
+		@keyframes fadeInOut {
+			0%, 100% { opacity: 0.2; }
+			50% { opacity: 1; }
+		}
+
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1A1A1A; 
+            color: #E0E0E0; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            overflow-x: hidden; 
+            opacity: 0; 
+            animation: fadeIn 1s ease-out forwards; 
+            position: relative; 
+            cursor: none; 
+        }
+
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            z-index: -2; 
+            filter: brightness(0.7) grayscale(0.2); 
+            opacity: 0.7; 
+            transition: opacity 1s ease;
+        }
+
+        
+        .cursor-glow {
+            position: fixed;
+            width: 80px; 
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 68, 68, 0.4) 0%, rgba(255, 0, 0, 0.05) 70%, transparent 100%);
+            pointer-events: none; 
+            transform: translate(-50%, -50%); 
+            z-index: -1; 
+            filter: blur(20px); 
+            transition: width 0.1s ease-out, height 0.1s ease-out, opacity 0.3s ease-out;
+            opacity: 0; 
+            will-change: transform; 
+        }
+
+        .cursor-glow.active {
+            opacity: 1;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 960px;
+            width: 100%;
+            padding: 30px;
+            background-color: rgba(40, 40, 40, 0.9); 
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); 
+            opacity: 0; 
+            transform: translateY(20px);
+            animation: slideInContainer 1s ease-out 0.3s forwards; 
+            position: relative; 
+            z-index: 1;
+        }
+
+        
+        @keyframes slideInContainer {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #FF4444; 
+            margin-bottom: 50px;
+            font-size: 3.2em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(255, 68, 68, 0.6); 
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: slideInHeader 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.8s forwards; 
+        }
+
+        
+        @keyframes slideInHeader {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            justify-content: center;
+            align-items: stretch;
+        }
+
+        .project-card {
+            background-color: rgba(51, 51, 51, 0.95); 
+            border-radius: 12px;
+            padding: 35px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+            color: #F0F0F0; 
+            transition: transform 0.4s ease-out, box-shadow 0.4s ease-out, border-color 0.4s ease-out, background-color 0.4s ease-out;
+            border: 2px solid transparent; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            opacity: 0; 
+            transform: translateY(30px);
+            
+            animation: slideInCard 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards calc(1.2s + var(--delay, 0) * 0.2s);
+        }
+
+        
+        @keyframes slideInCard {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,50,50,0.2) 0%, rgba(204,0,0,0) 100%); 
+            opacity: 0;
+            transition: opacity 0.4s ease-out;
+            z-index: 1;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.02); 
+            box-shadow: 0 12px 45px rgba(255, 0, 0, 0.4); 
+            border-color: #FF3333; 
+            background-color: rgba(58, 58, 58, 0.95); 
+        }
+
+        
+        .project-card svg {
+            width: 4.8em; 
+            height: 4.8em;
+            color: #FF6666; 
+            fill: currentColor; 
+            margin-bottom: 20px;
+            transition: fill 0.4s ease, transform 0.4s ease;
+            z-index: 2; 
+            position: relative;
+            filter: drop-shadow(0 0 10px rgba(255, 102, 102, 0.4)); 
+        }
+
+        .project-card:hover svg {
+            fill: #FF0000; 
+            animation: bounceIcon 0.6s ease-out; 
+            filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.7)); 
+        }
+
+        @keyframes bounceIcon {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.1); } 
+        }
+
+        .project-card h2 {
+            font-size: 2.2em;
+            margin-bottom: 12px;
+            color: #F0F0F0;
+            font-weight: 600;
+            z-index: 2;
+            position: relative;
+            transition: color 0.4s ease;
+        }
+
+        .project-card p {
+            font-size: 1.15em;
+            color: #B0B0B0; 
+            line-height: 1.5;
+            z-index: 2;
+            position: relative;
+            transition: color 0.4s ease;
+        }
+
+        .project-card:hover h2,
+        .project-card:hover p {
+            color: #FFFFFF; 
+        }
+
+        
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.85); 
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s ease-out; 
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: #333333; 
+            padding: 40px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 550px;
+            box-shadow: 0 10px 40px rgba(255, 0, 0, 0.4); 
+            position: relative;
+            text-align: center;
+            transform: translateY(-50px) scale(0.9); 
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease-out; 
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .modal-content h3 {
+            color: #FF6666; 
+            font-size: 2.4em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 102, 102, 0.5); 
+        }
+
+        .modal-content p {
+            font-size: 1.2em;
+            color: #E0E0E0; 
+            margin-bottom: 15px;
+        }
+
+        .modal-content strong {
+            color: #FF4444; 
+            font-weight: 700;
+        }
+
+        .modal-link {
+            display: inline-block;
+            background-color: #FF3333;
+            color: #fff;
+            padding: 14px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1.3em;
+            margin-top: 25px;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 51, 51, 0.4); 
+        }
+
+        .modal-link:hover {
+            background-color: #CC0000;
+            transform: translateY(-5px) scale(1.05); 
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.6); 
+        }
+
+        .modal-link svg { 
+            width: 1.2em; 
+            height: 1.2em;
+            fill: currentColor; 
+            margin-right: 10px;
+            vertical-align: middle; 
+        }
+
+        .close-button {
+            color: #888;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 35px; 
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: #FF6666;
+            transform: rotate(90deg); 
+        }
+
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+                margin-bottom: 40px;
+            }
+            .project-card {
+                padding: 30px;
+            }
+            .project-card svg {
+                font-size: 4em;
+            }
+            .project-card h2 {
+                font-size: 1.8em;
+            }
+            .modal-content {
+                padding: 30px;
+            }
+            .modal-content h3 {
+                font-size: 1.8em;
+            }
+            .modal-content p {
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2em;
+                margin-bottom: 30px;
+                letter-spacing: 1px;
+            }
+            .project-card {
+                padding: 25px;
+            }
+            .project-card svg {
+                font-size: 3.5em;
+            }
+            .project-card h2 {
+                font-size: 1.6em;
+            }
+            .modal-content {
+                padding: 25px;
+            }
+            .modal-link {
+                padding: 10px 20px;
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+<div id="preloader">
+    <canvas id="particles"></canvas>
+    <div class="preloader-text">
+        <h2>Проверка на робота</h2>
+        <p>Ожидайте окончания проверки</p>
     </div>
-    <a href="https://t.me/makvin_support" target="_blank" class="project-card" style="--delay:2;">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-        <path d="M304 0c-44.2 0-80 35.8-80 80V192c0 17.7 14.3 32 32 32s32-14.3 32-32V80c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v112c0 17.7 14.3 32 32 32s32-14.3 32-32V80c0-44.2-35.8-80-80-80zM224 256c-17.7 0-32 14.3-32 32V416H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H192c17.7 0 32-14.3 32-32V288c0-17.7-14.3-32-32-32zM320 288v96h96c17.7 0 32 14.3 32 32s14.3 32 32 32h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H448V288c0-17.7-14.3-32-32-32s-32 14.3-32 32z"/>
-      </svg>
-      <h2>Support</h2>
-      <p>Свяжитесь с нами по любым вопросам</p>
-    </a>
-  </div>
 </div>
 
-<div id="stressModal" class="modal">
-  <div class="modal-content">
-    <span class="close-button">&times;</span>
-    <h3>Доступ к MakvinStress</h3>
-    <p>Доступ к сервису MakvinStress предоставляется <strong>по заявкам</strong>.</p>
-    <p>Для получения доступа напишите в <a href="https://t.me/makvin_support" target="_blank">наш Telegram Support</a>.</p>
-  </div>
-</div>
 
-<script>
-  function onTurnstileSuccess(token) {
-    document.getElementById('preloader').style.display = 'none';
-    document.body.classList.add('captcha-passed');
-  }
+    
+    <div class="cursor-glow"></div>
 
-  // Модальное окно для MakvinStress
-  const modal = document.getElementById('stressModal');
-  const openModalBtn = document.getElementById('openStressModal');
-  const closeModalBtn = modal.querySelector('.close-button');
+    <div class="container">
+        <h1>Makvin Projects</h1>
 
-  openModalBtn.addEventListener('click', () => {
-    modal.style.display = 'block';
-  });
+        <div class="projects-grid">
+            
+            <a href="https://t.me/makvinvpn_newbot" target="_blank" class="project-card" style="--delay:0;">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path d="M256 0c4.6 0 9.2 1 13.4 2.9L400.6 60.2c2.7 1.2 5.1 2.9 7.1 5.1L492.3 150c18.3 20.6 24.8 47.9 18.2 73.6l-57.9 229.7c-3.1 12.3-10.3 23-20.5 31.7L280.9 494.3c-3.8 3.2-8.7 5-13.8 5s-10.1-1.7-13.8-5L58.9 485c-10.2-8.7-17.3-19.4-20.5-31.7L-2.2 223.6c-6.6-25.7 0-52.9 18.2-73.6l84.6-84.6c2-2.2 4.4-3.9 7.1-5.1L242.6 2.9C246.8 1 251.4 0 256 0zM128 224a128 128 0 1 1 256 0 128 128 0 1 1 -256 0z"/>
+                </svg>
+                <h2>MakvinVPN</h2>
+                <p>Ваша безопасность в сети</p>
+            </a>
 
-  closeModalBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-  });
+            
+            <div class="project-card" id="openStressModal" style="--delay:1;">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                    <path d="M128 0C110.3 0 96 14.3 96 32V179.3L19.5 224.6c-16.3 8.3-22.6 29.5-14.3 45.8s29.5 22.6 45.8 14.3L128 232v96l-78.5 44.7c-16.3 8.3-22.6 29.5-14.3 45.8s29.5 22.6 45.8 14.3L128 352v128c0 17.7 14.3 32 32 32s32-14.3 32-32V332.7L294.5 284c16.3-8.3 22.6-29.5 14.3-45.8s-29.5-22.6-45.8-14.3L192 280V184l78.5-44.7c16.3-8.3 22.6-29.5 14.3-45.8s-29.5-22.6-45.8-14.3L192 160V32c0-17.7-14.3-32-32-32H128z"/>
+                </svg>
+                <h2>MakvinStress</h2>
+                <p>Сервис для тестирования нагрузки</p>
+            </div>
 
-  window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.style.display = 'none';
-    }
-  });
-</script>
+            
+            <a href="https://t.me/makvin_support" target="_blank" class="project-card" style="--delay:2;">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                    <path d="M304 0c-44.2 0-80 35.8-80 80V192c0 17.7 14.3 32 32 32s32-14.3 32-32V80c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v112c0 17.7 14.3 32 32 32s32-14.3 32-32V80c0-44.2-35.8-80-80-80zM224 256c-17.7 0-32 14.3-32 32V416H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H192c17.7 0 32-14.3 32-32V288c0-17.7-14.3-32-32-32zM320 288v96h96c17.7 0 32 14.3 32 32s14.3 32 32 32h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H448V288c0-17.7-14.3-32-32-32s-32 14.3-32 32z"/>
+                </svg>
+                <h2>Support</h2>
+                <p>Свяжитесь с нами по любым вопросам</p>
+            </a>
+        </div>
+    </div>
 
+    
+    <div id="stressModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3>Доступ к MakvinStress</h3>
+            <p>Доступ к сервису MakvinStress предоставляется <strong>по заявкам</strong>.</p>
+            <p>Пожалуйста, напишите нашему менеджеру для получения доступа:</p>
+            <a href="https://t.me/makvin_support" target="_blank" class="modal-link">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path d="M446.7 98.6l-67.6 318.8c-1.4 6.2-7.4 10.1-13.6 8.7L.2 284.6c-5.8-1.5-5.8-9.3 0-10.8L446.7 98.6zM276 348.3L363.5 192 133.4 254.6l59.8 89.2 82.8 4.5z"/>
+                </svg>
+                @makvin_support
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ---- Логика модального окна ----
+            const openStressModalBtn = document.getElementById('openStressModal');
+            const stressModal = document.getElementById('stressModal');
+            const closeButton = document.querySelector('.modal .close-button');
+
+            openStressModalBtn.addEventListener('click', function() {
+                stressModal.classList.add('show');
+            });
+
+            closeButton.addEventListener('click', function() {
+                stressModal.classList.remove('show');
+            });
+
+            stressModal.addEventListener('click', function(event) {
+                if (event.target === stressModal) {
+                    stressModal.classList.remove('show');
+                }
+            });
+
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && stressModal.classList.contains('show')) {
+                    stressModal.classList.remove('show');
+                }
+            });
+
+            // ---- Эффект свечения за курсором ----
+            const cursorGlow = document.querySelector('.cursor-glow');
+
+            document.addEventListener('mousemove', (e) => {
+                cursorGlow.style.left = e.clientX + 'px';
+                cursorGlow.style.top = e.clientY + 'px';
+                cursorGlow.classList.add('active'); // Активируем свечение при движении
+            });
+
+            document.addEventListener('mouseleave', () => {
+                cursorGlow.classList.remove('active'); // Скрываем свечение при уходе курсора
+            });
+        });
+    </script>
+	<script>
+		// Анимация частиц — большие, реагируют на мышь
+		const canvas = document.getElementById('particles');
+		const ctx = canvas.getContext('2d');
+		let particles = [];
+		let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+
+		function resizeCanvas() {
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+		}
+		window.addEventListener('resize', resizeCanvas);
+		resizeCanvas();
+
+		function initParticles(count = 60) {
+			particles = [];
+			for (let i = 0; i < count; i++) {
+				const radius = Math.random() * 40 + 30; // крупные
+				particles.push({
+					x: Math.random() * canvas.width,
+					y: Math.random() * canvas.height,
+					radius,
+					dx: (Math.random() - 0.5) * 0.5,
+					dy: (Math.random() - 0.5) * 0.5,
+				});
+			}
+		}
+
+		function drawParticles() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			ctx.fillStyle = '#FF4444';
+			for (let p of particles) {
+				// Мягкое движение к мыши
+				const dx = (mouse.x - p.x) * 0.003;
+				const dy = (mouse.y - p.y) * 0.003;
+				p.x += p.dx + dx;
+				p.y += p.dy + dy;
+
+				// отскок от краёв
+				if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+				if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+
+				ctx.beginPath();
+				ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+				ctx.fill();
+			}
+			requestAnimationFrame(drawParticles);
+		}
+
+		window.addEventListener('mousemove', e => {
+			mouse.x = e.clientX;
+			mouse.y = e.clientY;
+		});
+
+		initParticles();
+		drawParticles();
+
+		// Скрыть прелоадер через 3 секунды
+		setTimeout(() => {
+			const preloader = document.getElementById('preloader');
+			preloader.style.opacity = '0';
+			preloader.style.transition = 'opacity 0.8s ease-out';
+			setTimeout(() => preloader.remove(), 800);
+		}, 3000);
+	</script>
 </body>
 </html>
