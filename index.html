@@ -1,125 +1,70 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MakvinVPN</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(180deg, #1a1a1a 0%, #2a2a2a 100%);
-            color: #f5f5f5;
-            font-family: 'Poppins', sans-serif;
-        }
-        .glassmorphic {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        }
-        .neumorphic-btn {
-            background: linear-gradient(45deg, #ef4444, #f97316);
-            box-shadow: 6px 6px 12px #1c1c1c, -6px -6px 12px #383838;
-            transition: all 0.3s ease;
-        }
-        .neumorphic-btn:hover {
-            box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.3), inset -4px -4px 8px rgba(255, 255, 255, 0.1);
-            transform: scale(1.05) translateY(-2px);
-        }
-        .status-dot {
-            height: 12px;
-            width: 12px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 8px;
-        }
-        .status-operational { background-color: #22c55e; }
-        .status-maintenance { background-color: #f59e0b; }
-        .status-down { background-color: #ef4444; }
-        .gradient-red {
-            background: linear-gradient(45deg, #ef4444, #f97316);
-        }
-        .logo-3d {
-            transform: perspective(500px) rotateY(10deg);
-            transition: transform 0.5s ease;
-        }
-        .logo-3d:hover {
-            transform: perspective(500px) rotateY(0deg) scale(1.1);
-        }
-        .asymmetric {
-            transform: translateX(10px);
-        }
-    </style>
-</head>
-<body class="min-h-screen flex flex-col items-center">
-    <!-- Hero Section -->
-    <section class="w-full max-w-md px-4 py-16 text-center" data-aos="zoom-in">
-        <img src="https://via.placeholder.com/120?text=Logo" alt="MakvinVPN Logo" class="mx-auto mb-6 rounded-full logo-3d">
-        <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 mb-4">MakvinVPN</h1>
-        <p class="text-lg mb-8">Ваш ключ к безопасному и быстрому интернету</p>
-    </section>
 
-    <!-- Social Links Section -->
-    <section class="w-full max-w-md px-4 flex flex-col gap-4 mb-12" data-aos="fade-up" data-aos-delay="100">
-        <a href="https://t.me/makvinvpn" target="_blank" class="glassmorphic neumorphic-btn text-white py-4 px-6 rounded-2xl flex items-center justify-center gap-3 text-lg asymmetric">
-            <i class="fab fa-telegram-plane"></i> Telegram Канал
-        </a>
-        <a href="https://t.me/makvinvpn_newbot" target="_blank" class="glassmorphic neumorphic-btn text-white py-4 px-6 rounded-2xl flex items-center justify-center gap-3 text-lg">
-            <i class="fas fa-robot"></i> Telegram Бот
-        </a>
-        <a href="https://t.me/makvin_support" target="_blank" class="glassmorphic neumorphic-btn text-white py-4 px-6 rounded-2xl flex items-center justify-center gap-3 text-lg asymmetric">
-            <i class="fas fa-headset"></i> Поддержка
-        </a>
-    </section>
+</div>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({ duration: 800, easing: 'ease-in-out' });
-        
-        // Simulated system status data (replace with real API call in production)
-        const statusData = [
-            { name: "Основные серверы", status: "operational" },
-            { name: "Служба аутентификации", status: "operational" },
-            { name: "Платежный шлюз", status: "maintenance" },
-            { name: "Разрешение DNS", status: "operational" },
-            { name: "API точки", status: "down" },
-        ];
+<div class="cursor-glow"></div>
 
-        const statusGrid = document.getElementById('status-grid');
+<div class="container">
+  <h1>Makvin Projects</h1>
+  <div class="projects-grid">
+    <!-- твои карточки -->
+    <a href="https://t.me/makvinvpn_newbot" target="_blank" class="project-card" style="--delay:0;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+        <path d="M256 0c4.6 0 9.2 1 13.4 2.9L400.6 60.2c2.7 1.2 5.1 2.9 7.1 5.1L492.3 150c18.3 20.6 24.8 47.9 18.2 73.6l-57.9 229.7c-3.1 12.3-10.3 23-20.5 31.7L280.9 494.3c-3.8 3.2-8.7 5-13.8 5s-10.1-1.7-13.8-5L58.9 485c-10.2-8.7-17.3-19.4-20.5-31.7L-2.2 223.6c-6.6-25.7 0-52.9 18.2-73.6l84.6-84.6c2-2.2 4.4-3.9 7.1-5.1L242.6 2.9C246.8 1 251.4 0 256 0zM128 224a128 128 0 1 1 256 0 128 128 0 1 1 -256 0z"/>
+      </svg>
+      <h2>MakvinVPN</h2>
+      <p>Ваша безопасность в сети</p>
+    </a>
+    <div class="project-card" id="openStressModal" style="--delay:1;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+        <path d="M128 0C110.3 0 96 14.3 96 32V179.3L19.5 224.6c-16.3 8.3-22.6 29.5-14.3 45.8s29.5 22.6 45.8 14.3L128 232v96l-78.5 44.7c-16.3 8.3-22.6 29.5-14.3 45.8s29.5 22.6 45.8 14.3L128 352v128c0 17.7 14.3 32 32 32s32-14.3 32-32V332.7L294.5 284c16.3-8.3 22.6-29.5 14.3-45.8s-29.5-22.6-45.8-14.3L192 280V184l78.5-44.7c16.3-8.3 22.6-29.5 14.3-45.8s-29.5-22.6-45.8-14.3L192 160V32c0-17.7-14.3-32-32-32H128z"/>
+      </svg>
+      <h2>MakvinStress</h2>
+      <p>Сервис для тестирования нагрузки</p>
+    </div>
+    <a href="https://t.me/makvin_support" target="_blank" class="project-card" style="--delay:2;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+        <path d="M304 0c-44.2 0-80 35.8-80 80V192c0 17.7 14.3 32 32 32s32-14.3 32-32V80c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v112c0 17.7 14.3 32 32 32s32-14.3 32-32V80c0-44.2-35.8-80-80-80zM224 256c-17.7 0-32 14.3-32 32V416H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H192c17.7 0 32-14.3 32-32V288c0-17.7-14.3-32-32-32zM320 288v96h96c17.7 0 32 14.3 32 32s14.3 32 32 32h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H448V288c0-17.7-14.3-32-32-32s-32 14.3-32 32z"/>
+      </svg>
+      <h2>Support</h2>
+      <p>Свяжитесь с нами по любым вопросам</p>
+    </a>
+  </div>
+</div>
 
-        function renderStatus() {
-            statusGrid.innerHTML = '';
-            statusData.forEach((item, index) => {
-                const statusClass = `status-dot status-${item.status}`;
-                const statusText = item.status === 'operational' ? 'Работает' : 
-                                 item.status === 'maintenance' ? 'Техобслуживание' : 'Не работает';
-                const card = `
-                    <div class="glassmorphic p-4 rounded-xl flex items-center gap-3 ${index % 2 ? 'asymmetric' : ''}">
-                        <span class="${statusClass}"></span>
-                        <div>
-                            <h3 class="font-semibold">${item.name}</h3>
-                            <p class="text-sm">${statusText}</p>
-                        </div>
-                    </div>
-                `;
-                statusGrid.innerHTML += card;
-            });
-        }
+<div id="stressModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button">&times;</span>
+    <h3>Доступ к MakvinStress</h3>
+    <p>Доступ к сервису MakvinStress предоставляется <strong>по заявкам</strong>.</p>
+    <p>Для получения доступа напишите в <a href="https://t.me/makvin_support" target="_blank">наш Telegram Support</a>.</p>
+  </div>
+</div>
 
-        // Initial render
-        renderStatus();
+<script>
+  function onTurnstileSuccess(token) {
+    document.getElementById('preloader').style.display = 'none';
+    document.body.classList.add('captcha-passed');
+  }
 
-        // Simulate status update every 30 seconds (replace with WebSocket or API polling)
-        setInterval(() => {
-            statusData.forEach(item => {
-                const statuses = ['operational', 'maintenance', 'down'];
-                item.status = statuses[Math.floor(Math.random() * statuses.length)];
-            });
-            renderStatus();
-        }, 30000);
-    </script>
+  // Модальное окно для MakvinStress
+  const modal = document.getElementById('stressModal');
+  const openModalBtn = document.getElementById('openStressModal');
+  const closeModalBtn = modal.querySelector('.close-button');
+
+  openModalBtn.addEventListener('click', () => {
+    modal.style.display = 'block';
+  });
+
+  closeModalBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+</script>
+
 </body>
 </html>
