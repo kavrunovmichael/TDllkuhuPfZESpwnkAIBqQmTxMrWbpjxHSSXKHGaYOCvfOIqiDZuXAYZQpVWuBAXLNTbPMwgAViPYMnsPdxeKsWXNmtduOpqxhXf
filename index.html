@@ -426,17 +426,14 @@
     </style>
 </head>
 <body>
-    
+<!--    
 <div id="preloader" hidden="true">
     <canvas id="particles"></canvas>
     <div class="preloader-text">
         <h2>Проверка на робота</h2>
         <p>Ожидайте окончания проверки</p>
     </div>
-</div>
-
-
-    
+</div> -->
     <div class="cursor-glow"></div>
 
     <div class="container">
@@ -452,8 +449,7 @@
                 <h2>MakvinVPN</h2>
                 <p>Твой портал в свободный Интернет</p>
             </a>
-
-            
+           
             <div class="project-card" id="openStressModal" style="--delay:1;">
                 
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -494,19 +490,15 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // ---- Логика модального окна ----
             const openStressModalBtn = document.getElementById('openStressModal');
             const stressModal = document.getElementById('stressModal');
             const closeButton = document.querySelector('.modal .close-button');
-
             openStressModalBtn.addEventListener('click', function() {
                 stressModal.classList.add('show');
             });
-
             closeButton.addEventListener('click', function() {
                 stressModal.classList.remove('show');
             });
-
             stressModal.addEventListener('click', function(event) {
                 if (event.target === stressModal) {
                     stressModal.classList.remove('show');
@@ -519,22 +511,20 @@
                 }
             });
 
-            // ---- Эффект свечения за курсором ----
             const cursorGlow = document.querySelector('.cursor-glow');
 
             document.addEventListener('mousemove', (e) => {
                 cursorGlow.style.left = e.clientX + 'px';
                 cursorGlow.style.top = e.clientY + 'px';
-                cursorGlow.classList.add('active'); // Активируем свечение при движении
+                cursorGlow.classList.add('active');
             });
 
             document.addEventListener('mouseleave', () => {
-                cursorGlow.classList.remove('active'); // Скрываем свечение при уходе курсора
+                cursorGlow.classList.remove('active');
             });
         });
     </script>
 	<script>
-		// Анимация частиц — большие, реагируют на мышь
 		const canvas = document.getElementById('particles');
 		const ctx = canvas.getContext('2d');
 		let particles = [];
@@ -550,7 +540,7 @@
 		function initParticles(count = 60) {
 			particles = [];
 			for (let i = 0; i < count; i++) {
-				const radius = Math.random() * 40 + 30; // крупные
+				const radius = Math.random() * 40 + 30;
 				particles.push({
 					x: Math.random() * canvas.width,
 					y: Math.random() * canvas.height,
@@ -565,13 +555,11 @@
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 			ctx.fillStyle = '#FF4444';
 			for (let p of particles) {
-				// Мягкое движение к мыши
 				const dx = (mouse.x - p.x) * 0.003;
 				const dy = (mouse.y - p.y) * 0.003;
 				p.x += p.dx + dx;
 				p.y += p.dy + dy;
 
-				// отскок от краёв
 				if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
 				if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
 
@@ -590,7 +578,6 @@
 		initParticles();
 		drawParticles();
 
-		// Скрыть прелоадер через 3 секунды
 		setTimeout(() => {
 			const preloader = document.getElementById('preloader');
 			preloader.style.opacity = '0';
